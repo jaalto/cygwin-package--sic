@@ -1,0 +1,7 @@
+sdesc: "Simple irc client"
+ldesc: "An extremly fast, small and simple irc client. It reads commands from
+standard input and prints all server output to standard output. It
+multiplexes also all channel traffic into one output, that you don't
+have to switch different channel buffers."
+category: Net
+requires:

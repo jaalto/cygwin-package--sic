@@ -1,0 +1,50 @@
+From 23ce94cc408813a07331695d5b5555d91d402e73 Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Fri, 11 Dec 2009 00:17:00 +0200
+Subject: [PATCH] sic.c: Check environment variables and NULL (prevent core dump)
+
+
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ sic.c |   18 ++++++++++++++++--
+ 1 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/sic.c b/sic.c
+index 059ad9a..da8bdf6 100644
+--- a/sic.c
++++ b/sic.c
+@@ -93,7 +93,7 @@ parsein(char *msg) {
+ 
+ void
+ parsesrv(char *msg) {
+-	char *chan, *cmd, *p, *txt, *usr; 
++	char *chan, *cmd, *p, *txt, *usr;
+ 
+ 	txt = NULL;
+ 	usr = host;
+@@ -166,7 +166,21 @@ main(int argc, char *argv[]) {
+ 	char ping[256];
+ 	fd_set rd;
+ 
+-	strncpy(nick, getenv("USER"), sizeof nick);
++	char *userp = NULL;
++
++	if ( (userp = getenv("IRCNICK"))  ||
++	     (userp = getenv("USER"))     ||  /* [t]csh shell */
++	     (userp = getenv("LOGNAME"))  ||  /* Bash shell */
++	     (userp = getenv("USERNAME")) )   /* Windows environemt */
++	{
++	    /* ok */
++	}
++	else
++	    die("ERROR: IRCNICK, LOGNAME, USER or USERNAME not set.");
++
++	strncpy(nick, userp, sizeof nick);
++
++
+ 	for(i = 1; i < argc; i++)
+ 		if(!strncmp(argv[i], "-h", 3)) {
+ 			if(++i < argc) host = argv[i];
+-- 
+1.6.4.2
+
