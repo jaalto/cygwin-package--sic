@@ -1,0 +1,38 @@
+From 3e00350c470ef0901c1a44176cf7a7b458d2a1ff Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Mon, 28 Dec 2009 18:22:31 +0200
+Subject: [PATCH] Makefile: Add .exe variable EXT
+
+
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Makefile |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0ee4426..82170c6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -5,6 +5,10 @@ include config.mk
+ SRC = sic.c
+ OBJ = ${SRC:.c=.o}
+ 
++ifneq ($(WINDIR),)
++EXT = .exe
++endif
++
+ all: options sic
+ 
+ options:
+@@ -38,7 +42,7 @@ dist: clean
+ install: all
+ 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
+ 	@mkdir -p ${DESTDIR}${PREFIX}/bin
+-	@cp -f sic ${DESTDIR}${PREFIX}/bin
++	cp -f sic$(EXT) ${DESTDIR}${PREFIX}/bin
+ 	@chmod 755 ${DESTDIR}${PREFIX}/bin/sic
+ 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
+ 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
+-- 
+1.6.4.2
+
