@@ -8,7 +8,7 @@ PACKAGE DESCRIPTION
 Homepage: http://tools.suckless.org/sic
 License : MIT
 
-An extremly fast, small and simple irc client. It reads commands from
+An extremely fast, small and simple irc client. It reads commands from
 standard input and prints all server output to standard output. It
 multiplexes also all channel traffic into one output, that you don't
 have to switch different channel buffers.
